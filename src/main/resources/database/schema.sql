@@ -1,0 +1,11 @@
+DROP IF EXISTS TABLE STUDENTS;
+
+CREATE TABLE STUDENTS (
+    ID      NUMBER          NOT NULL    PRIMARY KEY,
+    EMAIL   VARCHAR(50)     NOT NULL
+)
+
+INSERT INTO STUDENTS VALUES
+(1, 'a1@gmail.com'),
+(2, 'a2@gmail.com'),
+(3, 'a3@gmail.com');
