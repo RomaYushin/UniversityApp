@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    image: uniapp:latest
+    build:
+      context: .
+    ports:
+      - '8083:8083'
+    container_name: uniapp_container
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://db:5432/university_db'
+      SPRING_DATASOURCE_USERNAME: 'postgres'
+      SPRING_DATASOURCE_PASSWORD: 'admin'
+#      SPRING_JPA_HIBERNATE_DDL_AUTO: 'update'
+
+  db:
+    image: postgres:14-alpine
+    ports:
+      - '5432:5432'
+    container_name: uniapp_db_container
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'admin'
+      POSTGRES_DB: 'university_db'
+    volumes:
+      - .\docker\db\init.sql:/docker-entrypoint-initdb.d/init.sql
+#      - .\docker\db\data.sql:/docker-entrypoint-initdb.d/data.sql
+

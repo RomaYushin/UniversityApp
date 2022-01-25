@@ -24,3 +24,8 @@
 #### execute get request in browser: http://localhost:8083/test, should be 200 response with answer 'Server is ok'
 
 ... todo switch in db
+docker run --name habr-pg-14 -p 5433:5432 -e POSTGRES_PASSWORD=pgpwd4habr -d postgres:14
+
+netstat -aon | find ":5432"
+
+taskkill /PID 5844 /F
