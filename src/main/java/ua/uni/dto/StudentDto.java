@@ -25,4 +25,22 @@ public class StudentDto {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StudentDto)) return false;
+
+        StudentDto that = (StudentDto) o;
+
+        if (!getId().equals(that.getId())) return false;
+        return getEmail().equals(that.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        return result;
+    }
 }

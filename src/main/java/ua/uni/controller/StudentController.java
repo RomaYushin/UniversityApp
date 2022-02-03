@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.uni.dto.StudentDto;
-import ua.uni.service.StudentSrvice;
+import ua.uni.service.StudentService;
 
 import java.util.List;
 
@@ -14,15 +14,15 @@ import java.util.List;
 @RequestMapping(value = "/students")
 public class StudentController {
 
-    private StudentSrvice studentSrvice;
+    private StudentService studentService;
 
     @Autowired
-    public StudentController(StudentSrvice studentSrvice) {
-        this.studentSrvice = studentSrvice;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StudentDto> getAllStudents() {
-        return studentSrvice.getAllStudents();
+        return studentService.getAllStudents();
     }
 }

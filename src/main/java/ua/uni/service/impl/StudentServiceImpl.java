@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import ua.uni.dto.StudentDto;
 import ua.uni.repository.StudentRepo;
 import ua.uni.repository.entity.Student;
-import ua.uni.service.StudentSrvice;
+import ua.uni.service.StudentService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class StudentServiceImpl implements StudentSrvice {
+public class StudentServiceImpl implements StudentService {
 
     private StudentRepo studentRepo;
 

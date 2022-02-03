@@ -1,25 +1,46 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.3'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
+    id "org.springframework.boot" version "2.6.3"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "java"
+    id "jacoco"
     id "org.sonarqube" version "3.3"
 }
 
-group 'ua.uni'
-version '1.0'
-sourceCompatibility = '11'
+group "ua.uni"
+version "1.0"
+sourceCompatibility = "11"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'org.postgresql:postgresql'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    runtimeOnly "org.postgresql:postgresql"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation group: "org.junit.jupiter", name: "junit-jupiter-engine", version: "5.8.2"
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled true
+    }
+}
+
+sonarqube{
+    properties {
+        property "sonar.projectName", "UniversityApp"
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/test.exec"
+        property "sonar.junit.reportsPath", "${project.buildDir}/test-results/test"
+        property "sonar.password", "admin1"
+        property "sonar.login", "admin"
+    }
 }
