@@ -11,15 +11,15 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import ua.uni.dto.StudentDto;
+import ua.uni.exception.StudentNotFountException;
 import ua.uni.service.StudentService;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(StudentController.class)
 class StudentControllerTest {
@@ -58,5 +58,35 @@ class StudentControllerTest {
         Mockito.when(studentSrvice.getAllStudents()).thenReturn(mockStudents);
 
         assertEquals(studentSrvice.getAllStudents(), mockStudents);
+    }
+
+    @Test
+    void shouldReturnStudentInResponse() throws Exception {
+        Mockito.when(studentSrvice.getStudentById(st1.getId())).thenReturn(st1);
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get("/students/1")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("@.id", is(1)))
+                .andExpect(jsonPath("@.email", is("a")));
+    }
+
+    @Test
+    void shouldReturnBadRequestAndThrowException() throws Exception {
+        final Long nonExistentId = -1L;
+        final String exceptionMessage = "User with id: " + nonExistentId + " not found";
+        Mockito.when(studentSrvice.getStudentById(nonExistentId)).thenThrow( new StudentNotFountException(exceptionMessage));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get("/students/" + nonExistentId)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof StudentNotFountException))
+                .andExpect(result -> assertEquals(exceptionMessage, result.getResolvedException().getMessage()));
     }
 }
