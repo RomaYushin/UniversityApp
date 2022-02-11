@@ -5,13 +5,14 @@
 > gradlew clean build
 
 ### 2. Check with sonar locally (not obligatory)
-##### install and adjust sonarqube on your machine: https://www.sonarqube.org/
+##### install and set up sonarqube on your machine; official website, where you can download sonar: https://www.sonarqube.org/
 ##### deploy app into sonar
-> gradlew sonarqube -Dsonar.projectKey=UniversityApp -Dsonar.host.url=http://localhost:9000 -Dsonar.login=01b968471c2860065582c53607d7b14c9368ee00
+> gradlew sonarqube -Dsonar.projectKey=UniversityApp -Dsonar.host.url=http://localhost:9000 -Dsonar.login=1a25670b52350b92c15ff4dfdc22d14a032995c5
 #### open http://localhost:9000 and check your project with different metrics
 
 ### 3. Docker
 ##### install Docker on your machine: https://www.docker.com/products/personal 
+##### check if docker was successfully installed
 > docker --version
 ##### should return something like this: 
 > Docker version 20.10.12, build e91ed57
@@ -29,3 +30,10 @@ docker run --name habr-pg-14 -p 5433:5432 -e POSTGRES_PASSWORD=pgpwd4habr -d pos
 netstat -aon | find ":5432"
 
 taskkill /PID 5844 /F
+
+docker-compose todo
+
+kubernetes todo 
+ load-balancer main question
+ high load testing
+
