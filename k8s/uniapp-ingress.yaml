@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: uniapp-ingress
+spec:
+  rules:
+    - host: uniapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: uniapp-service
+                port:
+                  number: 8082

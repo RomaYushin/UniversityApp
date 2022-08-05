@@ -5,7 +5,7 @@
 > gradlew clean build
 
 ### 2. Check with sonar locally (not obligatory)
-##### install and set up sonarqube on your machine; official website, where you can download sonar: https://www.sonarqube.org/
+##### install and set up sonarqube on your machine;<br> official website, where you can download sonar: https://www.sonarqube.org/
 ##### deploy app into sonar
 > gradlew sonarqube -Dsonar.projectKey=UniversityApp -Dsonar.host.url=http://localhost:9000 -Dsonar.login=1a25670b52350b92c15ff4dfdc22d14a032995c5
 #### open http://localhost:9000 and check your project with different metrics
@@ -24,14 +24,27 @@
 > docker run -d -p 8083:8083 uniapp
 #### execute get request in browser: http://localhost:8083/test, should be 200 response with answer 'Server is ok'
 
+#### Ok. Now let's push into docker hub repository; 
+#### You need to create account in https://hub.docker.com/ 
+#### Log in in cmd <br> push image into repo
+
+> docker push username/containerName:tag <br>
+> docker push iushyn/uniapp:latest
+
+### 4. Docker compose
+create docker-compose.yaml file
+... todo ....
+
+### 5. k8s
+
+
+
 ... todo switch in db
 docker run --name habr-pg-14 -p 5433:5432 -e POSTGRES_PASSWORD=pgpwd4habr -d postgres:14
 
 netstat -aon | find ":5432"
 
 taskkill /PID 5844 /F
-
-docker-compose todo
 
 kubernetes todo 
  load-balancer main question

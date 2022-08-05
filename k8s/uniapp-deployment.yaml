@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uniapp-deployment
+  labels:
+    app: uniapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uniapp
+  template:
+    metadata:
+      labels:
+        app: uniapp
+    spec:
+      imagePullSecrets:
+        - name: uniapp-secret
+      containers:
+        - name: uniapp-container
+          image: docker.io/iushyn/uniapp:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8083
